@@ -18,3 +18,5 @@ terragrunt
 **/charts/common
 # Ignoring test directories
 **/kitchen
+
+terraform/oci/dev
