@@ -3,7 +3,7 @@ include "root" {
 }
 
 include "environment" {
-  path = "${get_terragrunt_dir()}/../../_common/gke.hcl"
+  path = "${get_terragrunt_dir()}/../../_common/oke.hcl"
 # This section will be enabled after final code is pushed and tagged
 #  expose = true
 }
