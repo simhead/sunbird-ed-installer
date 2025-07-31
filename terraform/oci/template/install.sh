@@ -34,7 +34,7 @@ function backup_configs() {
 
 function create_tf_resources() {
     source tf.sh
-    echo -e "\nCreating resources on GCP"
+    echo -e "\nCreating resources on OCI"
     terragrunt init -upgrade
     terragrunt run-all apply --terragrunt-non-interactive 
     chmod 600 ~/.kube/config
@@ -43,17 +43,17 @@ function create_tf_resources() {
 function certificate_keys() {
     # Generate private and public keys using openssl
     echo "Creation of RSA keys for certificate signing"
-    openssl genrsa -out ../../../terraform/oci/$environment/certkey.pem;
-    openssl rsa -in ../../../terraform/oci/$environment/certkey.pem -pubout -out ../../../terraform/oci/$environment/certpubkey.pem
-    CERTPRIVATEKEY=$(sed 's/KEY-----/KEY-----\\n/g' ../../../terraform/oci/$environment/certkey.pem | sed 's/-----END/\\n-----END/g' | awk '{printf("%s",$0)}')
-    CERTPUBLICKEY=$(sed 's/KEY-----/KEY-----\\n/g' ../../../terraform/oci/$environment/certpubkey.pem | sed 's/-----END/\\n-----END/g' | awk '{printf("%s",$0)}')
-    CERTIFICATESIGNPRKEY=$(sed 's/BEGIN PRIVATE KEY-----/BEGIN PRIVATE KEY-----\\\\n/g' ../../../terraform/oci/$environment/certkey.pem | sed 's/-----END PRIVATE KEY/\\\\n-----END PRIVATE KEY/g' | awk '{printf("%s",$0)}')
-    CERTIFICATESIGNPUKEY=$(sed 's/BEGIN PUBLIC KEY-----/BEGIN PUBLIC KEY-----\\\\n/g' ../../../terraform/oci/$environment/certpubkey.pem | sed 's/-----END PUBLIC KEY/\\\\n-----END PUBLIC KEY/g' | awk '{printf("%s",$0)}')
-    printf "\n" >> ../../../terraform/oci/$environment/global-values.yaml
-    echo "  CERTIFICATE_PRIVATE_KEY: \"$CERTPRIVATEKEY\"" >> ../../../terraform/oci/$environment/global-values.yaml
-    echo "  CERTIFICATE_PUBLIC_KEY: \"$CERTPUBLICKEY\"" >> ../../../terraform/oci/$environment/global-values.yaml
-    echo "  CERTIFICATESIGN_PRIVATE_KEY: \"$CERTIFICATESIGNPRKEY\"" >> ../../../terraform/oci/$environment/global-values.yaml
-    echo "  CERTIFICATESIGN_PUBLIC_KEY: \"$CERTIFICATESIGNPUKEY\"" >> ../../../terraform/oci/$environment/global-values.yaml
+    openssl genrsa -out ../terraform/oci/$environment/certkey.pem;
+    openssl rsa -in ../terraform/oci/$environment/certkey.pem -pubout -out ../terraform/oci/$environment/certpubkey.pem
+    CERTPRIVATEKEY=$(sed 's/KEY-----/KEY-----\\n/g' ../terraform/oci/$environment/certkey.pem | sed 's/-----END/\\n-----END/g' | awk '{printf("%s",$0)}')
+    CERTPUBLICKEY=$(sed 's/KEY-----/KEY-----\\n/g' ../terraform/oci/$environment/certpubkey.pem | sed 's/-----END/\\n-----END/g' | awk '{printf("%s",$0)}')
+    CERTIFICATESIGNPRKEY=$(sed 's/BEGIN PRIVATE KEY-----/BEGIN PRIVATE KEY-----\\\\n/g' ../terraform/oci/$environment/certkey.pem | sed 's/-----END PRIVATE KEY/\\\\n-----END PRIVATE KEY/g' | awk '{printf("%s",$0)}')
+    CERTIFICATESIGNPUKEY=$(sed 's/BEGIN PUBLIC KEY-----/BEGIN PUBLIC KEY-----\\\\n/g' ../terraform/oci/$environment/certpubkey.pem | sed 's/-----END PUBLIC KEY/\\\\n-----END PUBLIC KEY/g' | awk '{printf("%s",$0)}')
+    printf "\n" >> ../terraform/oci/$environment/global-values.yaml
+    echo "  CERTIFICATE_PRIVATE_KEY: \"$CERTPRIVATEKEY\"" >> ../terraform/oci/$environment/global-values.yaml
+    echo "  CERTIFICATE_PUBLIC_KEY: \"$CERTPUBLICKEY\"" >> ../terraform/oci/$environment/global-values.yaml
+    echo "  CERTIFICATESIGN_PRIVATE_KEY: \"$CERTIFICATESIGNPRKEY\"" >> ../terraform/oci/$environment/global-values.yaml
+    echo "  CERTIFICATESIGN_PUBLIC_KEY: \"$CERTIFICATESIGNPUKEY\"" >> ../terraform/oci/$environment/global-values.yaml
 }
 
 function certificate_config() {
@@ -94,7 +94,7 @@ function install_component() {
             kubectl delete job keycloak-kids-keys -n sunbird
         fi
 
-        if [ -f "certkey.pem" ] && [ -f "certpubkey.pem" ]; then
+        if [ -f "../terraform/oci/$environment/certkey.pem" ] && [ -f "../terraform/oci/$environment/certpubkey.pem" ]; then
             echo "Certificate keys are already created. Skipping the keys creation..."
         else
             certificate_keys
@@ -104,8 +104,8 @@ function install_component() {
         $ed_values_flag \
         -f "../terraform/oci/$environment/global-values.yaml" \
         -f "../terraform/oci/$environment/global-cloud-values.yaml" \
-	-f "../terraform/oci/dev/global-values-jwt-tokens.yaml" \ 
-       	-f "../terraform/oci/dev/global-values-rsa-keys.yaml" --timeout 30m --debug
+	-f "../terraform/oci/$environment/global-values-jwt-tokens.yaml" \
+	-f "../terraform/oci/$environment/global-values-rsa-keys-v2.yaml" --timeout 30m --debug
 
 }
 

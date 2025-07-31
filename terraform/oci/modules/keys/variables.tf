@@ -29,3 +29,8 @@ variable "rsa_keys_count" {
     description = "Number of rsa keys to generate"
     default     = 2
 }
+
+variable "oci_storage_bucket_name" {
+  description = "Name of the OCI Object Storage bucket to upload files to."
+  type        = string
+}

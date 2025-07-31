@@ -1,22 +1,50 @@
 global:
-  cloud_storage_access_key: ${gcp_storage_account_email}      
-  cloud_storage_secret_key: ${gcp_storage_account_key}
-  public_container_name: ${gcp_public_container_name}
-  private_container_name: ${gcp_private_container_name}
-  dial_state_container_public: ${gcp_dial_state_container_public}
+  env: "${env}"
+  environment: "${environment}"
+  buildingBlock: "${building_block}"
+  cloud:
+    storage:
+      provider: "${cloud_storage_provider}"
+      region: "${cloud_storage_region}"
+      # OCI Specific Object Storage details
+      namespace: "${oci_object_storage_namespace}" # OCI Object Storage requires a namespace
+      publicContainerName: "${oci_storage_bucket_public}"
+      privateContainerName: "${oci_storage_bucket_private}"
+    kubernetes:
+      # These values would come from your OKE cluster outputs
+      endpoint: "${oke_cluster_endpoint}"
+      clusterName: "${oke_cluster_name}"
+    # OCI-specific project/compartment details
+    oci:
+      compartmentId: "${oci_compartment_ocid}"
+      region: "${cloud_storage_region}" # Using cloud_storage_region as the main OCI region
+  secrets:
+    randomString: "${random_string}"
+  networking:
+    privateIngressGatewayIp: "${private_ingressgateway_ip}"
+  storage:
+    class: "${storage_class}"
+
+  public_container_name: ${oci_public_container_name}
+  private_container_name: ${oci_private_container_name}
+  oci_public_container_name: ${oci_public_container_name}
+  oci_private_container_name: ${oci_private_container_name}
+  dial_state_container_name: ${oci_dial_state_container_public}
   private_ingressgateway_ip: ${private_ingressgateway_ip}
-  encryption__string: ${encryption_string}
   random_string: ${random_string}
-  gcp_project_id: ${gcp_project_id}
   storage_class: ${storage_class}
   cloud_storage_provider:  ${cloud_storage_provider}
   cloud_storage_region: ${cloud_storage_region}
+  cloud_private_storage_accountname: "dummystring"
+  cloud_private_storage_secret: "dummystring"
+  cloud_storage_secret_key: "${random_string}"
+  cloud_storage_access_key: "${random_string}"
   
   serviceAccount: 
     create: true
     name: sunbird-sa
     annotations:
-      iam.gke.io/gcp-service-account: ${gcp_storage_account_email}
+      iam.oke.io/oci-service-account: "TODO"
 
 velero:                                                       
   enabled: true
@@ -25,27 +53,27 @@ velero:
       create: true
       name: velero-sa
       annotations:
-        iam.gke.io/gcp-service-account: ${gcp_storage_account_email}
+        iam.oke.io/oci-service-account: "TODO"
   credentials:
     useSecret: false
   configuration:
     backupStorageLocation:
       - name: default
         provider: ${cloud_storage_provider}
-        bucket: "${gcp_public_container_name}"
+        bucket: "${oci_public_container_name}"
         config:
           prefix: backups
-          serviceAccount: ${gcp_storage_account_email}
+          serviceAccount: "TODO"
     backupSyncPeriod: 15m
     volumeSnapshotLocation:
     - name: default
       provider: ${cloud_storage_provider}
       config:
-        project: ${gcp_project_id}
+        project: "TODO"
         region:  ${cloud_storage_region}     
   initContainers:
-    - image: velero/velero-plugin-for-gcp
-      name: velero-plugin-for-gcp
+    - image: velero/velero-plugin-for-oci
+      name: velero-plugin-for-oci
       volumeMounts:
         - mountPath: /target
           name: plugins  
@@ -58,6 +86,11 @@ spark:
 nginx-public-ingress:
   commonAnnotations:
     reloader.stakater.com/auto: "true"
-    cloud.google.com/load-balancer-type: "External"
-
+    # OCI Load Balancer Annotations for an external Load Balancer
+    # These annotations are applied to the Kubernetes Service of type LoadBalancer
+    service.beta.kubernetes.io/oci-load-balancer-shape: "flexible" # Or "10Mbps", "100Mbps", "400Mbps", "8000Mbps" etc.
+    service.beta.kubernetes.io/oci-load-balancer-shape-min: "10" # Min bandwidth for flexible shape
+    service.beta.kubernetes.io/oci-load-balancer-shape-max: "100" # Max bandwidth for flexible shape (adjust as needed)
+    # Potentially for network security groups (NSGs) if you prefer over security lists:
+    # service.beta.kubernetes.io/oci-load-balancer-nsg-ids: "ocid1.networksecuritygroup.oc1..<nsg_id_1>,ocid1.networksecuritygroup.oc1..<nsg_id_2>"
     

@@ -5,9 +5,12 @@ locals {
   env = local.global_vars.global.env
   environment  = local.global_vars.global.environment
   building_block = local.global_vars.global.building_block
+  storage_class = local.global_vars.global.storage_class
   region = local.global_vars.global.cloud_storage_region
   project = local.global_vars.global.cloud_storage_project
   cloud_storage_provider = local.global_vars.global.cloud_storage_provider
+  oci_compartment_ocid     = local.global_vars.global.oci_compartment_ocid
+  oci_object_storage_namespace     = local.global_vars.global.oci_object_storage_namespace
 }
 
 # For local development
@@ -18,15 +21,20 @@ terraform {
 dependency "storage" {
     config_path = "../storage"
     mock_outputs = {
-      gcp_public_container_name = "dummy"
-      gcp_private_container_name = "dummy"
+      oci_public_bucket_name = "dummy"
+      oci_private_bucket_name = "dummy"
+      oci_dial_state_bucket_public_name = "dummy"
     }
 }
 
-dependency "gke" {
-    config_path = "../gke"
+dependency "oke" {
+    config_path = "../oke"
     mock_outputs = {
-      storage_class = "dummy"
+      private_ingressgateway_ip = "10.1.1.1"
+      encryption_string = "test"
+      cluster_endpoint = "test"
+      cluster_name = "test"
+      cluster_id = "test"
     }
 }
 
@@ -34,14 +42,17 @@ dependency "keys" {
     config_path = "../keys"
     mock_outputs = {
       random_string = "dummy-string"
+      encryption_string = "dummy-string"
     }
 }
  
  dependency "service-account" {
    config_path = "../service-account"
    mock_outputs = {
-     service_account_key_local_path = "service_account_key_local_path" 
-     service_account_email         = "dummy-service_account_email"
+     oci_iam_user_ocid = "dummy"
+     oci_iam_user_name = "dummy"
+     oci_api_key_fingerprint = "dummy"
+     oci_api_private_key_local_path = "dummy"
   }
 }
 
@@ -49,17 +60,26 @@ inputs = {
   env                                = local.env
   environment                        = local.environment
   building_block                     = local.building_block
-  storage_container_public           = dependency.storage.outputs.gcp_public_container_name
-  storage_container_private          = dependency.storage.outputs.gcp_private_container_name
-  private_ingressgateway_ip          = dependency.gke.outputs.private_ingressgateway_ip
+  oci_compartment_ocid               = local.oci_compartment_ocid
+  oci_object_storage_namespace       = local.oci_object_storage_namespace
+  oci_storage_bucket_public          = dependency.storage.outputs.oci_public_bucket_name
+  oci_storage_bucket_private         = dependency.storage.outputs.oci_private_bucket_name
+  storage_container_public           = dependency.storage.outputs.oci_public_bucket_name
+  storage_container_private          = dependency.storage.outputs.oci_private_bucket_name
+#  oci_storage_bucket_public          = "storage_container_public"
+#  oci_storage_bucket_private         = "storage_container_private"
+#  storage_container_public           = "storage_container_public"
+#  storage_container_private          = "storage_container_private"
+  private_ingressgateway_ip          = dependency.oke.outputs.private_ingressgateway_ip
   encryption_string                  = dependency.keys.outputs.encryption_string
   random_string                      = dependency.keys.outputs.random_string
   cloud_storage_region               = local.region
-  dial_state_container_public        = dependency.storage.outputs.gcp_dial_state_container_public
-  gcp_project_id                     = local.project
-  gcp_storage_bucket_key             = dependency.service-account.outputs.service_account_private_key
-  gcp_storage_account_mail           = dependency.service-account.outputs.service_account_key_email
-  storage_class                      = dependency.gke.outputs.storage_class
+  dial_state_container_public        = dependency.storage.outputs.oci_dial_state_bucket_public_name
+  oci_dial_state_bucket_public       = dependency.storage.outputs.oci_dial_state_bucket_public_name
+  oci_project_id                     = local.project
+  storage_class                      = local.storage_class
   cloud_storage_provider             = local.cloud_storage_provider
   cloud_storage_region               = local.region
+  oke_cluster_endpoint               = dependency.oke.outputs.cluster_endpoint
+  oke_cluster_name                   = dependency.oke.outputs.cluster_name 
 }

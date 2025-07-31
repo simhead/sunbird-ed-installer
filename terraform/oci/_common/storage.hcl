@@ -8,6 +8,9 @@ locals {
   project= local.global_vars.global.cloud_storage_project
   env = local.global_vars.global.env
   domain = local.global_vars.global.domain
+  oci_region               = local.global_vars.global.oci_region
+  oci_compartment_ocid     = local.global_vars.global.oci_compartment_ocid
+  oci_object_storage_namespace = local.global_vars.global.oci_object_storage_namespace
 }
 
 # For local development
@@ -22,4 +25,10 @@ inputs = {
   project             = local.project
   env                 = local.env
   domain              = local.domain
+
+  # Common OCI variables from global-values.yaml via root_config
+  compartment_ocid           = local.oci_compartment_ocid
+  oci_object_storage_namespace = local.oci_object_storage_namespace
+  oci_region                 = local.oci_region
+
 }

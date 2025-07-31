@@ -1,0 +1,457 @@
+<html><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <div class="container main-cont header-gap" id="terms-of-use">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+        <style type="text/css">
+            * {
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: "Lato", sans-serif;
+                font-size: 14px;
+                line-height: 1.428571429;
+                color: #4a4a4a;
+                background-color: #fff;
+            }
+
+            h1,
+            h2 {
+                font-size: 24px;
+                color: #005da2;
+                font-weight: bold;
+                margin-bottom: 30px;
+            }
+
+            p {
+                font-size: 16px;
+                line-height: 30px;
+                margin-bottom: 15px;
+            }
+
+            /* .alpha-list {
+                    list-style-type: lower-alpha;
+                } */
+
+            b,
+            strong {
+                font-weight: bold;
+            }
+
+            .list-circle {
+                list-style-type: circle;
+            }
+
+            .lower-roman {
+                list-style-type: lower-roman;
+            }
+
+            a {
+                text-decoration: none;
+                color: #4a4a4a;
+                cursor: pointer;
+            }
+
+            a:hover,
+            a:active,
+            a:focus,
+            a.no-underline:hover,
+            a.no-underline:active,
+            a.no-underline:focus {
+                color: #4a90e2;
+                text-decoration: none;
+            }
+
+            a:focus {
+                outline: 5px auto -webkit-focus-ring-color;
+                outline-offset: -2px;
+            }
+
+            .container {
+                margin-right: auto;
+                margin-left: auto;
+            }
+
+            li {
+                overflow-wrap: break-word;
+            }
+
+            ol li ul li {
+                list-style-type: circle;
+            }
+
+            @media (min-width: 768px) {
+                .container {
+                    max-width: 100%;
+                }
+            }
+            @media (min-width: 992px) {
+                .container {
+                    max-width: 100%;
+                }
+            }
+
+            @media (min-width: 1200px) {
+                .container {
+                    width: 1170px;
+                }
+            }
+
+            ::-webkit-scrollbar {
+                width: 8px;
+                background-color: #F5F5F5;
+            }
+
+            ::-webkit-scrollbar-track {
+                border-radius: 10px;
+                -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+
+            }
+
+            ::-webkit-scrollbar-thumb {
+                border-radius: 10px;
+                -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+            }
+
+            .nav {
+                display: -ms-flexbox;
+                display: flex;
+                -ms-flex-wrap: wrap;
+                flex-wrap: wrap;
+                padding-left: 0;
+                margin-bottom: 0;
+                list-style: none;
+                background-color: white;
+            }
+
+            .nav-tabs .nav-item {
+                margin-bottom: -1px;
+                /* padding: .5rem 1rem; */
+            }
+
+            .nav-tabs .nav-item.show .nav-link,
+            .nav-tabs .nav-link.active {
+                color: #495057;
+                background-color: #fff;
+                border-color: #dee2e6 #dee2e6 #fff;
+            }
+
+            .nav-tabs .nav-link {
+                border: 1px solid transparent;
+                border-top-left-radius: .25rem;
+                border-top-right-radius: .25rem;
+            }
+
+            .nav-link {
+                display: block;
+                /* padding: 0; */
+            }
+
+            #terms-of-use .nav-tabs {
+                border-bottom: none;
+            }
+
+            #terms-of-use .nav-tabs .nav-link {
+                border: none;
+                color: rgb(41, 56, 69);
+                padding: 0.5rem;
+            }
+
+            #terms-of-use .nav-tabs .nav-item.show .nav-link,
+            #terms-of-use .nav-tabs .nav-link.active {
+                color: #024f9d;
+                border-bottom: 2px solid #024f9d;
+            }
+
+            #terms-of-use #termsAndPolicies {
+                border: 2px solid #bcbcbc;
+                margin-top: 20px;
+                padding: 30px;
+                margin-bottom: 30px;
+            }
+
+            #terms-of-use .TermsOfUseClick,
+            #terms-of-use .TermsOfUseClick:hover,
+            #terms-of-use .tab-pane a,
+            #terms-of-use .tab-pane a:hover {
+                color: #024f9d;
+                cursor: pointer;
+            }
+
+            #terms-of-use .TermsOfUseClick:hover,
+            #terms-of-use .tab-pane a:hover {
+                text-decoration: underline;
+            }
+
+            #terms-of-use a,
+            #terms-of-use p,
+            #terms-of-use li,
+            #terms-of-use div {
+                /* word-break: break-word; */
+                font-size: 16px;
+            }
+
+            #terms-of-use .scrollToTop {
+                cursor: pointer;
+            }
+
+            #terms-of-use .scrollToTop .scrollTopWrapper {
+                text-align: center;
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+                background: #dfe6ed;
+                position: fixed;
+                padding: 10px;
+                z-index: 1;
+                bottom: 10px;
+                right: 10px;
+            }
+
+            #terms-of-use #termsAndPolicies ul li {
+                list-style-type: disc;
+            }
+
+            #terms-of-use .scrollToTop .scrollTopWrapper i {
+                display: block;
+                font-size: 24px;
+                line-height: 10px;
+            }
+
+            #terms-of-use .scrollToTop .scrollTopWrapper span {
+                display: block;
+                font-size: 14px;
+            }
+
+            ol li {
+                margin: 10px 0;
+            }
+
+            .nav-item-container {
+                justify-content: flex-start;
+            }
+
+            @media screen and (max-width: 769px) {
+
+                #terms-of-use ul {
+                    padding-inline-start: 0;
+                }
+
+                #terms-of-use ol {
+                    padding-inline-start: 20px;
+                }
+
+                #terms-of-use.container {
+                    max-width: 100%;
+                }
+
+                #terms-of-use .nav-tabs .nav-item {
+                    padding: .5rem 0;
+                }
+
+                #terms-of-use .nav-item:first-child {
+                    padding-right: 1rem;
+                }
+
+                #terms-of-use #termsAndPolicies {
+                    border: none;
+                    padding: 0;
+                }
+
+                .nav-item-container {
+                    justify-content: center;
+                }
+            }
+
+            #terms-of-use h3 {
+                text-align: center;
+                font-size: 20px;
+                font-weight: 600;
+            }
+
+            #terms-of-use label.tagLine {
+                text-align: center;
+                display: block;
+                font-size: 14px;
+                margin-bottom: 30px;
+            }
+
+            .pull-right {
+                float: right;
+            }
+
+            .text-right {
+                text-align: right !important;
+            }
+
+            #terms-of-use .nav-tabs {
+                border-bottom: none;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                overflow-y: hidden;
+            }
+
+            #terms-of-use .nav-tabs .nav-link {
+                white-space: nowrap;
+            }
+
+            #terms-of-use .nav-tabs::-webkit-scrollbar {
+                width: 8px;
+                height: 8px;
+                background-color: #F5F5F5;
+            }
+
+            #terms-of-use .nav-tabs::-webkit-scrollbar-thumb {
+                border-radius: 10px;
+                -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+            }
+        </style>
+        <div class="row">
+            <div class="col-12">
+                <ul class="nav nav-tabs tncTabs" id="termsAndPoliciesTab" role="tablist">
+                    <li class="nav-item"> <a class="nav-link active show" id="terms-of-use-tab" data-toggle="tab" href="#termsOfUse" role="tab" aria-controls="termsOfUse" aria-selected="true">Terms of Use</a></li>
+                    <li class="nav-item"> <a class="nav-link" id="privacy-policy-tab" data-toggle="tab" href="#privacyPolicy" role="tab" aria-controls="privacyPolicy" aria-selected="false">Privacy
+                            Policy</a></li>
+                    <li class="nav-item"> <a class="nav-link" id="content-policy-tab" data-toggle="tab" href="#contentPolicy" role="tab" aria-controls="contentPolicy" aria-selected="false">Content
+                            Policy</a></li>
+                    <li class="nav-item"> <a class="nav-link" id="group-guidelines-tab" data-toggle="tab" href="#groupGuidelines" role="tab" aria-controls="groupGuidelines" aria-selected="false">Group
+                            Guidelines</a></li>
+                    <li class="nav-item"> <a class="nav-link" id="course-guidelines-tab" data-toggle="tab" href="#courseGuidelines" role="tab" aria-controls="courseGuidelines" aria-selected="false">Course Guidelines</a></li>
+                    <li class="nav-item"> <a class="nav-link" id="administrator-guidelines-tab" data-toggle="tab" href="#administratorGuidelines" role="tab" aria-controls="administratorGuidelines" aria-selected="false">Sunbird Administrator Guidelines</a></li>
+                </ul>
+                <div class="tab-content" id="termsAndPolicies">
+                    <div class="tab-pane fade active show" id="termsOfUse" role="tabpanel" aria-labelledby="terms-of-use-tab">
+                        <h3><strong>Terms of Use</strong></h3> <label class="tagLine">(<em>Last updated on<b>24-May-2021)</b></em></label>
+                        Your terms of use goes here!
+                        
+                        <div class="text-right"> <a class="text-right TermsOfUseClick" tabtoshow="privacy-policy-tab" tabpanetoshow="privacyPolicy">Read Privacy Policy of Sunbird <i class="fas fa-chevron-right"></i> </a></div>
+                    </div>
+                    <div class="tab-pane fade" id="privacyPolicy" role="tabpanel" aria-labelledby="privacy-policy-tab">
+                        <h3><strong>Privacy Policy of Sunbird</strong></h3> <label class="tagLine">(<em>Last updated on<b>24-May-2021</b> ) </em></label>
+                        Your privacy policy goes here!
+                        
+                        <div class="text-left"> <span class="text-left "> <a class="TermsOfUseClick" tabtoshow="terms-of-use-tab" tabpanetoshow="termsOfUse"><i class="fas fa-chevron-left"></i> Read Terms of Use</a> </span> <span class="text-right pull-right"> <a class="TermsOfUseClick" tabtoshow="content-policy-tab" tabpanetoshow="contentPolicy">Read Content Policy of Sunbird <i class="fa fa-chevron-right"></i></a> </span></div>
+                    </div>
+                    <div class="tab-pane fade" id="contentPolicy" role="tabpanel" aria-labelledby="content-policy-tab">
+                        <h3><strong>Content Policy of Sunbird</strong></h3> <label class="tagLine"><em>( Last updated on<b>24-May-2021</b> )</em></label>
+                        Your content policy goes here!
+                        
+                        <div class="text-left"> <span class="text-left "> <a class="text-right TermsOfUseClick" tabtoshow="privacy-policy-tab" tabpanetoshow="privacyPolicy"> <i class="fas fa-chevron-left"></i> Read Privacy Policy of Sunbird</a> </span> <span class="text-right pull-right"> <a class="TermsOfUseClick" tabtoshow="group-guidelines-tab" tabpanetoshow="groupGuidelines">Read Group
+                                    Guidelines of Sunbird <i class="fa fa-chevron-right"></i></a> </span></div>
+                    </div>
+                    <div class="tab-pane fade" id="groupGuidelines" role="tabpanel" aria-labelledby="group-guidelines-tab">
+                        <h3><strong>Sunbird Group Guidelines</strong></h3> <label class="tagLine"><em>( Last updated on
+                                <b>24-May-2021</b> )</em></label>
+                        Your groups policy goes here!
+                        
+                        <div class="text-left"> <span class="text-left "> <a class="TermsOfUseClick" tabtoshow="content-policy-tab" tabpanetoshow="contentPolicy"><i class="fas fa-chevron-left"></i> Read Content Policy of Sunbird</a> </span> <span class="text-right pull-right"> <a class="TermsOfUseClick" tabtoshow="course-guidelines-tab" tabpanetoshow="courseGuidelines">Read Course
+                                    Guidelines of Sunbird <i class="fa fa-chevron-right"></i></a> </span></div>
+                    </div>
+                    <div class="tab-pane fade" id="courseGuidelines" role="tabpanel" aria-labelledby="course-guidelines-tab">
+                        <h3><strong>Sunbird Course Terms</strong></h3> <label class="tagLine"><em> ( Last updated on
+                                <b>24-May-2021</b> )</em></label>
+                        Your course policy goes here!
+                        
+                        <div class="text-left">
+                            <span class="text-left ">
+                                <a class="TermsOfUseClick" tabtoshow="group-guidelines-tab" tabpanetoshow="groupGuidelines">
+                                    <i class="fas fa-chevron-left"></i> Read Group Guidelines of Sunbird
+                                </a>
+                            </span>
+                            <span class="text-right pull-right">
+                                <a class="TermsOfUseClick" tabtoshow="administrator-guidelines-tab" tabpanetoshow="administratorGuidelines">
+                                    Read administrator guidelines of Sunbird <i class="fa fa-chevron-right"></i>
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="administratorGuidelines" role="tabpanel" aria-labelledby="administrator-guidelines-tab">
+                        <h3><strong>Sunbird Administrator Guidelines</strong></h3>
+                        <label class="tagLine"><em> (Last updated on <b>24-May-2021</b> )</em></label>
+                        Your administrator guidelines goes here!
+                        
+                        <div class="text-left">
+                            <span class="text-left ">
+                                <a class="TermsOfUseClick" tabtoshow="course-guidelines-tab" tabpanetoshow="courseGuidelines">
+                                    <i class="fas fa-chevron-left"></i> Read Course Guidelines of Sunbird
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var windowHash = window.location.hash;
+            $('#termsAndPoliciesTab a,.tab-pane').removeClass("active").removeClass("show");
+            if (windowHash == '#termsOfUse') {
+                $(`#terms-of-use-tab`).addClass("show").addClass("active");
+                $(`#termsOfUse`).addClass("show").addClass("active");
+            } else if (windowHash == '#contentPolicy') {
+                $(`#content-policy-tab`).addClass("show").addClass("active");
+                $(`#contentPolicy`).addClass("show").addClass("active");
+            } else if (windowHash == '#privacyPolicy') {
+                $(`#privacy-policy-tab`).addClass("show").addClass("active");
+                $(`#privacyPolicy`).addClass("show").addClass("active");
+            } else if (windowHash == '#groupGuidelines') {
+                $(`#group-guidelines-tab`).addClass("show").addClass("active");
+                $(`#groupGuidelines`).addClass("show").addClass("active");
+            } else if (windowHash == '#courseGuidelines') {
+                $(`#course-guidelines-tab`).addClass("show").addClass("active");
+                $(`#courseGuidelines`).addClass("show").addClass("active");
+            } else if (windowHash == '#administratorGuidelines') {
+                $(`#administrator-guidelines-tab`).addClass("show").addClass("active");
+                $(`#administratorGuidelines`).addClass("show").addClass("active");
+            } else {
+                $(`#terms-of-use-tab`).addClass("show").addClass("active");
+                $(`#termsOfUse`).addClass("show").addClass("active");
+            }
+            $("html, body").animate({
+                scrollTop: 0
+            }, "slow");
+        })
+
+        $('.TermsOfUseClick').on('click', function (e) {
+            e.preventDefault()
+            console.log(`#${$(this).attr("tabPaneToShow")}`, `#${$(this).attr("tabToShow")}`);
+            $('#termsAndPoliciesTab a,.tab-pane').removeClass("active").removeClass("show");
+            $(`#${$(this).attr("tabToShow")}`).addClass("show").addClass("active");
+            $(`#${$(this).attr("tabPaneToShow")}`).addClass("show").addClass("active");
+            $("html, body").animate({
+                scrollTop: 0
+            }, "slow");
+        });
+
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > $(document).height() - $(window).height() - 300) {
+                $('.scrollToTop').fadeIn();
+            } else {
+                $('.scrollToTop').fadeOut();
+            }
+        });
+
+        //Click event to scroll to top
+        $('.scrollToTop').click(function () {
+            $('html, body').animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+        });
+    </script>
+
+
+</body></html>

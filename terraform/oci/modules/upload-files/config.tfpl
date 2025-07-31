@@ -1,8 +1,23 @@
-[ownaccount]
-type = gcs
-key = ${storage_account_key}
+# ~/.config/rclone/rclone.conf
 
 [sunbird]
-type = azureblob
-account = ${sunbird_public_artifacts_account}
-sas_url = ${sunbird_public_artifacts_account_sas_url}
+#type = s3
+type = oracleobjectstorage
+#provider = Oracle
+# Use OCI CLI config (profile) or environment variables for auth
+env_auth = true 
+# Assuming Sunbird is in the same OCI region
+region = ${oci_region} 
+namespace = ${namespace}
+
+[ownaccount]
+type = oracleobjectstorage
+#type = s3
+#provider = Oracle
+# Use OCI CLI config (profile) or environment variables for auth
+# If you need to specify a profile (e.g., [profile tf_user_rclone] in ~/.oci/config):
+# profile = "tf_user_rclone"
+env_auth = true 
+# OCI Object Storage namespace is part of the bucket path in rclone commands, not here.
+region = ${oci_region}
+namespace = ${namespace}

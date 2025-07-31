@@ -3,19 +3,58 @@ global:
   env: "" 
   environment: "" # environment name
   release_version: "release-7.0.0"
-  # Cluster-level variables for GKE setup and networking
-  gke_node_pool_instance_type: "n2d-standard-16"
+  # Cluster-level variables for OKE setup and networking
+  oke_node_pool_instance_type: "VM.Standard.E3.Flex"
   create_network: "true"
-  gke_node_default_disk_size_gb: 100
-  object_storage_endpoint: storage.googleapis.com
-  checkpoint_store_type: "gcs"
-  cloud_storage_provider: "gcp"
-  cloud_service_provider: "google"
-  sunbird_cloud_storage_provider: "gcloud"
-  cloud_storage_region: ""
+  oke_node_default_disk_size_gb: 100
+  oke_node_pool_scaling_desired_size: 3
+  node_pool_ssh_public_key: "REPLACE_ME"
+  object_storage_endpoint: "<namespace>.compat.objectstorage.<region>.oraclecloud.com"
+  checkpoint_store_type: "s3" # oci is using aws s3-compatible API
+  druid_storage_provider: "s3"
+  cloud_storage_provider: "oci"
+  cloud_service_provider: "oracle"
+  sunbird_cloud_storage_provider: "aws" # oci is using aws s3-compatible API
+  kubernetes_version: "REPLACE_ME"
+  cloud_storage_region: "<region>"
+  oci_region: "<region>"
+  region: "<region>"
+  oci_compartment_ocid: ""
+  tenancy_ocid: "REPLACE_ME"
+  oci_dynamic_group: "REPLACE_ME"
+  oci_dynamic_group_ocid: "REPLACE_ME"
+  oci_object_storage_namespace: "REPLACE_ME"
+  oci_bucket_namespace: "REPLACE_ME"
+  network:
+    vcn_cidr_block: "10.0.0.0/16"
+    public_kubernetes_api_subnet_cidr: "10.0.1.0/24"
+    public_load_balancer_subnet_cidr: "10.0.2.0/24"
+    private_worker_node_subnet_cidr: "10.0.3.0/24"
+    private_pod_subnet_cidr: "10.0.4.0/24"
+    private_subnet_cidr: "10.0.5.0/24"
   zone: ""
   cloud_storage_project: ""
-  # Provide your domain name
+  serviceAccount:
+    name: "oci"
+  storage_class: "oci-bv"
+
+  # OCI S3 Compartible API Details
+  s3_access_key: "REPLACE_ME"
+  s3_secret_key: "REPLACE_ME"
+  s3_secret_id: "REPLACE_ME"
+  s3_endpoint: "https://<namspace>.compat.objectstorage.<region>.oraclecloud.com"
+  s3_path_style_access: "true"
+  s3_region: "REPLACE_ME"
+
+  # OCI access details
+  username: "REPLACE_ME"
+  user_ocid: "REPLACE_ME"
+  user_tenancy: "REPLACE_ME"
+  user_fingerprint: "REPLACE_ME"
+  user_region: "REPLACE_ME"
+  user_key_file: "REPLACE_ME"
+  user_key_file_pem: ""
+
   # Example: sunbird.com
   domain: "REPLACE_ME"
   # cloud_private_storage_accountname: "service-terraform-account@sunbird-morocco-sandbox-434709.iam.gserviceaccount.com"
@@ -47,7 +86,7 @@ global:
   #   3XiRbKPMyzjr8IOF5s8+0LzQLioxsJIo32HIAGQIfW2C98ArSj/rwb/P7+vtPvNV
   #   DRzvh5qBZ6d6NRoUHR7Wt9LRGQmstksULEUzDGqpsYTXSxZSUHjs9mZ1wgPwb+7I
   #   Uy4+3R/toG9gAOE9m7LFsUNq1W3/ParhWfTaJiXcKaQaDyr+D4v6o/kBYA9JfVd+
-  #   Pgesx+xSHGP7gkeNahGXUqU5c8uA8XJEG4JEFBHeEVOeUw2TKUC7aI+KGUG5WmLC
+  #   Pgesx+xSHGP7okeNahGXUqU5c8uA8XJEG4JEFBHeEVOeUw2TKUC7aI+KGUG5WmLC
   #   DXAzaXJQCe+CsTHbtAd15niXlC31pFiLREi8gS39JGRlHMe7iNmLyXNapJz5oQP9
   #   /mEE9CgzAgMBAAECggEAP0z7Cojrxm8bvm7d9iO7FZoeZAWdTzPKq5SwG3um036z
   #   EkeFMyqYVyo2L01cC+Z3aohcIyCEdPViS7P1HKZfrglZMP7/pz0ixOsh7bTOnMTP

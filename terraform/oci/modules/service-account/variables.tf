@@ -16,6 +16,30 @@ variable "project" {
   type        = string
 }
 
+variable "compartment_ocid" {
+  description = "The OCID of the compartment where resources are created."
+  type        = string
+}
+
+variable "tenancy_ocid" {
+  description = "The OCID of the tenancy where resources are created."
+  type        = string
+}
+
+variable "oci_dynamic_group" {
+  description = "dynamic group."
+  type        = string
+}
+
+variable "oci_dynamic_group_ocid" {
+  description = "dynamic group."
+  type        = string
+}
+
+variable "oci_object_storage_namespace" {
+  description = "The name of your OCI tenancy (Object Storage Namespace)."
+  type        = string
+}
 
 # ---------------------------------------------------------------------------------------------------------------------
 # OPTIONAL MODULE PARAMETERS
@@ -23,42 +47,38 @@ variable "project" {
 # ---------------------------------------------------------------------------------------------------------------------
 
 variable "cluster_service_account_description" {
-  description = "A description of the custom service account used for the GKE cluster."
+  description = "Description for the OCI Dynamic Group for OKE nodes."
   type        = string
-  default     = "GKE Cluster Service Account managed by Terraform"
+  default     = "Dynamic Group for OKE worker nodes"
 }
 
 variable "service_account_roles" {
-  description = "Additional roles to be added to the service account."
+  description = "List of OCI IAM policy statements for the OKE nodes."
   type        = list(string)
-  default     = [
-    "roles/logging.logWriter",
-    "roles/monitoring.metricWriter",
-    "roles/monitoring.viewer",
-    "roles/stackdriver.resourceMetadata.writer"
-  ]
+  default     = null
 }
 
-variable "google_service_account_key_path" {
-  description = "The path to the service account key file."
+variable "enable_oke_workload_identity" {
+  description = "Set to true to configure OKE Workload Identity. Requires K8s service account details."
+  type        = bool
+  default     = false
+}
+
+variable "k8s_service_account_name" {
+  description = "Kubernetes Service Account name for Workload Identity."
   type        = string
-  default     = ""
+  default     = "default" # Or your specific K8s SA
 }
 
-variable "sa_namespace" {
-  description = "The namespace of the GKE service account."
+variable "k8s_service_account_namespace" {
+  description = "Kubernetes Service Account namespace for Workload Identity."
   type        = string
-  default     = "sunbird"
+  default     = "default" # Or your specific K8s namespace
 }
 
-variable "cluster_service_account_name" {
-  description = "The name of the custom service account used for the GKE cluster. This parameter is limited to a maximum of 28 characters."
-  type        = string
-  default     = "terraform"
-}
-
+# Variable for storing keys, if you must (not recommended for SA keys)
 variable "sa_key_store_bucket" {
-  description = "The name of the GCS bucket where the service account key will be stored."
+  description = "OCI Object Storage bucket name to store sensitive files (e.g., generated keys)."
   type        = string
-  default     = ""
+  default     = null # Make it optional
 }

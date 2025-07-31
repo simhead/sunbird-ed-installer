@@ -3,9 +3,10 @@ generate "backend" {
   if_exists = "overwrite_terragrunt"
   contents = <<EOF
 terraform {
-  backend "gcs" {
-    bucket  = "${get_env("TERRAFORM_BACKEND_BUCKET")}"
-    prefix  = "${path_relative_to_include()}/terraform.tfstate"
+  backend "oci" {
+    bucket    = "${get_env("TERRAFORM_BACKEND_BUCKET")}"
+    key       = "${path_relative_to_include()}/terraform.tfstate"
+    namespace = "${get_env("NAMESPACE")}"
   }
 }
 EOF

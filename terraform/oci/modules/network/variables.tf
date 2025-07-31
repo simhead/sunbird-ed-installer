@@ -1,16 +1,93 @@
+# --------------------------------------------------------------------------------------------------------------------
+# OCI PARAMETERS
+# These variables are expected to be passed in by the operator
+# ---------------------------------------------------------------------------------------------------------------------
+
+variable "compartment_ocid" {
+  description = "The OCID of the compartment where networking resources will be created."
+  type        = string
+}
+
+variable "oci_region" {
+  description = "The OCI region for resource deployment."
+  type        = string
+}
+
+variable "vcn_cidr_block" {
+  description = "The main CIDR block for the VCN (e.g., 10.0.0.0/16)."
+  type        = string
+}
+
+variable "public_kubernetes_api_subnet_cidr" {
+  description = "CIDR block for the public subnet where the OKE Kubernetes API endpoint will reside."
+  type        = string
+}
+
+variable "public_load_balancer_subnet_cidr" {
+  description = "CIDR block for the public subnet where OKE public load balancers will be deployed."
+  type        = string
+}
+
+variable "private_worker_node_subnet_cidr" {
+  description = "CIDR block for the private subnet where OKE worker nodes will reside."
+  type        = string
+}
+
+variable "private_pod_subnet_cidr" {
+  description = "CIDR block for the private subnet where OKE Pods will be allocated IPs (CNI managed)."
+  type        = string
+}
+
+variable "private_subnet_cidr" {
+  description = "CIDR block for the private subnet."
+  type        = string
+}
+
+variable "allow_ssh_from_cidr" {
+  description = "CIDR block allowed to SSH into public-facing resources (e.g., bastion host if present)."
+  type        = string
+  default     = "0.0.0.0/0" # Be more restrictive in production, e.g., your office IP
+}
+
+variable "freeform_tags" {
+  description = "Free-form tags to apply to all network resources."
+  type        = map(string)
+  default     = {}
+}
+
+variable "defined_tags" {
+  description = "Defined tags to apply to all network resources."
+  type        = map(map(string))
+  default     = {}
+}
+
+variable "flow_logs_enabled" {
+  description = "Set to true to enable VCN Flow Logs."
+  type        = bool
+  default     = false
+}
+
+variable "log_group_ocid" {
+  description = "The OCID of the OCI Log Group for VCN Flow Logs (required if flow_logs_enabled is true)."
+  type        = string
+  default     = null # Can be left null if flow logs are disabled
+}
+
+# Your existing variables (environment, building_block) remain
+variable "environment" {
+  description = "The environment name (e.g., dev, prod)."
+  type        = string
+}
+
+variable "building_block" {
+  description = "The building block name (e.g., app, db)."
+  type        = string
+}
+
 # ---------------------------------------------------------------------------------------------------------------------
 # REQUIRED PARAMETERS
 # These variables are expected to be passed in by the operator
 # ---------------------------------------------------------------------------------------------------------------------
-variable "environment" {
-    type        = string
-    description = "environment name. All resources will be prefixed with this value."
-}
-
-variable "building_block" {
-    type        = string
-    description = "Building block name. All resources will be prefixed with this value."
-}
 variable "project" {
   description = "The project ID for the network"
   type        = string
@@ -118,7 +195,6 @@ variable "igw_cidr" {
 
 
 variable "log_config" {
-  description = "The logging options for the subnetwork flow logs. Setting this value to `null` will disable them. See https://www.terraform.io/docs/providers/google/r/compute_subnetwork.html for more information and examples."
   type = object({
     aggregation_interval = string
     flow_sampling        = number
