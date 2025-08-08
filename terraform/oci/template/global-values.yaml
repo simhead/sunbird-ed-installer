@@ -9,6 +9,7 @@ global:
   oke_node_default_disk_size_gb: 100
   oke_node_pool_scaling_desired_size: 3
   node_pool_ssh_public_key: "REPLACE_ME"
+  oci_object_storage_endpoint: "objectstorage.<region>.oraclecloud.com"
   object_storage_endpoint: "<namespace>.compat.objectstorage.<region>.oraclecloud.com"
   checkpoint_store_type: "s3" # oci is using aws s3-compatible API
   druid_storage_provider: "s3"
